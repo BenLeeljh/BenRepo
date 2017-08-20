@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace属性：名称空间，相当于java中的package，用于防止sql语句冲突 -->
+<mapper namespace="test">
+	<!-- myabtis针对每一种sql语句：新增/修改/删除/查询，提供了对应的标签：insert/update/delete/select放置 -->
+
+	<!-- 根据用户Id查询用户,说明： select标签：用于放置查询sql语句 id属性：唯一区分每一条sql语句 parameterType属性：输入参数类型 
+		resultType属性：返回值类型 #{id}:占位符，相当于jdbc中的? -->
+	<select id="queryUserById" parameterType="int" resultType="cn.itheima.po.User">
+		select * from `user` where id=#{id}
+	</select>
+	<!--根据用户名称模糊查询用户 -->
+	<select id="queryUserByName" parameterType="string" resultType="cn.itheima.po.User">
+		<!-- select * from `user` where username like #{username} -->
+		<!-- where username like '%小% ' 说明 ${value}：使用字符串凭借符处理参数 -->
+		select * from user where username like '%${value}%'
+
+	</select>
+
+	<!--新增用户 说明： insert 标签 放置新增sql语句 #{id}:占位符，当参数传递的是pojo的时候，花括号中的内容是pojo属性 -->
+	<!--问题 自增长的用户Id不需要传递 但是mybatis中如何获取新自增长的id mysql数据库 select LAST_INSERT_ID() -->
+	<insert id="insertUser" parameterType="cn.itheima.po.User"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		<!-- insert into user(id,username,birthday,sex,address) values(#{id},#{username},#{birthday},#{sex},#{address}); -->
+		<!-- 获取新增以后的用户Id,说明： selectKey标签：查询主键 keyColumn属性：主键字段（表） keyProperty属性：pojo主键属性 
+			resultType属性：指定主键字段类型 order属性：指定在insert语句执行之前，还是之后获取主键值.BEFORE:表示之前，AFTER：表示之后 -->
+		<!-- <selectKey keyColumn="id" keyProperty="id" resultType="int" order="AFTER" 
+			> select LAST_INSERT_ID() </selectKey> -->
+		insert into `user`(username,birthday,sex,address)
+		values(#{username},#{birthday},#{sex},#{address})
+	</insert>
+
+	<!--根据用户id修改用户 说明 ： 
+	update标签 放置修改sql语句
+	-->
+	<update id="updateUserById" parameterType="cn.itheima.po.User">
+	update user  set username=#{username},sex=#{sex} where id=#{id}
+	</update>
+	
+	<!-- 根据用户Id删除用户，说明： 
+ delete标签：放置删除sql语句-->
+ <delete id="deleteUserById" parameterType="int">
+ 	delete from `user` where id=#{id}
+ </delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--加载属性文件，说明： 1.resource属性：指定（本地）属性文件的位置 2.url属性： 指定（网络）属性文件位置 3.使用内部property标签定义属性 
+		4.加载顺序：首先加载内部property标签定义的属性，
+		 再加载属性文件中定义的属性，如果存在相同的属性，
+		  属性文件的属性覆盖内部property标签定义的属性 -->
+	<properties resource="db.properties">
+		<property name="db.username" value="root123" />
+		<property name="db.password" value="admin" />
+	</properties>
+	
+	<!-- setting全局配置 -->
+	<settings>
+		<!-- 开启二级缓存 -->
+		<setting name="cacheEnabled" value="true"/>
+	</settings>
+   <!--配置别名  -->
+   <typeAliases>
+   <!-- 配置用户别名，说明：
+		 type属性：别名的类型
+		 alias属性：别名的名称-->
+		<!-- <typeAlias type="cn.itheima.po.User" alias="user"/> -->
+  <!-- 以包扫描的方式配置别名，说明：
+		 1.name属性：要扫描的包，别名的名称默认是类型的名称
+		 2.如果有多个包，配置多个
+		 3.企业项目中，推荐使用这种方式-->
+		<package name="cn.itheima.po"/>
+   </typeAliases>
+	<!--运行环境配置 -->
+	<!--default 指定使用哪一个运行环境 -->
+	<environments default="development">
+
+		<!--单个运行环境配置，id:区分每一个运行环境 -->
+		<environment id="development">
+			<!-- 事务管理器配置，jdbc：使用jdbc 的事务 -->
+			<transactionManager type="JDBC" />
+			<!--数据源配置 pooled连接池 -->
+			<dataSource type="POOlED">
+				<!-- <property name="driver" value="com.mysql.jdbc.Driver" /> <property 
+					name="url" value="jdbc:mysql://localhost:3306/mybatis" /> <property name="username" 
+					value="root" /> <property name="password" value="root" /> -->
+				<property name="driver" value="${db.driver}" />
+				<property name="url" value="${db.url}" />
+				<property name="username" value="${db.username}" />
+				<property name="password" value="${db.password}" />
+			</dataSource>
+		</environment>
+
+	</environments>
+
+	<!-- 配置mapper映射文件 -->
+	<mappers>
+		<!-- 配置User.xml文件，resource属性：指定配置文件的位置 -->
+		<mapper resource="sqlmap/User.xml" />
+		<!-- 配置UserMapper.xml -->
+		<!-- <mapper resource="sqlmap/UserMapper.xml" /> -->
+	<!-- 包扫描方式，配置映射文件，说明：
+		 1.前提必须是mapper代理开发方法
+		 2.要求mapper映射文件，必须与mapper接口在同一个目录
+		 3.要求mapper映射文件名称，必须与mapper接口的名称一致-->
+		<package name="cn.itheima.mapper"/>
+	</mappers>
+
+
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
