@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itheima.crm.mapper.UserMapper">
+   <select id="queryAll" resultType="user">
+   select * from tb_user
+   </select>
+   
+   <insert id="addUser" parameterType="user">
+      insert into `tb_user`(user_name,password,name,age,sex,birthday) 
+ 	values(#{user_name},#{password},#{name},#{age},#{sex},#{birthday})
+   </insert>
+   
+   <select id="queryUserById" parameterType="int" resultType="user">
+     select * from tb_user where id=#{id}
+   
+   </select>
+   
+   <!-- 根据客户Id修改客户信息 -->
+	<update id="updateUserById" parameterType="user">
+		UPDATE tb_user c
+		<set>
+			<if test="user_name !=null and user_name !=''">
+				c.user_name = #{user_name},
+			</if>
+			<if test="password !=null and password !=''">
+				c.password = #{password},
+			</if>
+			<if test="name !=null and name !=''">
+				c.name = #{name},
+			</if>
+			<if test="age !=null and age !=''">
+				c.age = #{age},
+			</if>
+			<if test="sex !=null and sex !=''">
+				c.sex = #{sex},
+			</if>
+			<if test="birthday !=null and birthday !=''">
+				c.birthday = #{birthday},
+			</if>
+			
+		</set>
+		<where>
+			c.id = #{id}
+		</where>
+  </update>
+  
+  <delete id="deleteUserByIds" parameterType="list">
+    delete from tb_user  where
+    <foreach collection="array" open="id in( " close=")" item="id" separator=",">
+ 		#{id}
+ 	</foreach>
+   
+  
+  </delete>
+  
+</mapper>
